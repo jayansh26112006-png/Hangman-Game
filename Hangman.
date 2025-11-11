@@ -1,0 +1,66 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h> 
+
+int main() {
+    char secretWord[] = "JAYANSH";
+    char displayWord[50];
+    char guess;
+    int lives = 6;  
+    int length, i, correct, won;
+
+    length = strlen(secretWord);
+
+       for (i = 0; i < length; i++) {
+        displayWord[i] = '-';
+    }
+    displayWord[length] = '\0';
+
+    printf("Welcome to the Hangman Game By Jayansh Agrawal \n");
+    printf("You Have To Guess the secret word , You have %d lives.\n\n", lives);
+
+    while (lives > 0) {
+        printf("Word Is: ");
+        for (i = 0; i < length; i++) {
+            printf("%c ", displayWord[i]);
+        }
+        printf("\nLives left: %d\n", lives);
+
+        printf("Enter a letter: ");
+        scanf(" %c", &guess);
+
+          guess = toupper(guess);
+
+        correct = 0;
+        for (i = 0; i < length; i++) {
+            if (secretWord[i] == guess) {
+                displayWord[i] = guess;
+                correct = 1;
+            }
+        }
+
+        if (correct) {
+            printf("✅ Yes'%c' is in the word.\n\n", guess);
+        } else {
+            lives--;
+            printf("❌ No'%c' is not in the word.\n\n", guess);
+        }
+
+        won = 1;
+        for (i = 0; i < length; i++) {
+            if (displayWord[i] == '-') {
+                won = 0;
+                break;
+            }
+        }
+
+        if (won) {
+            printf("🎉 Congratulations , You guessed the word: %s\n", secretWord);
+            return 0;
+        }
+    }
+
+    printf("😞 Sorry You lost , The word was: %s\n", secretWord);
+    return 0;
+}
+
